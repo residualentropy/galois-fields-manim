@@ -19,5 +19,15 @@ class WhyGalois(Scene):
             Write(encrypt_arrow),
             Write(ct_bin),
         )
-        ### by doing a bunch of math
-        
+        ### by doing a bunch of math,
+        mafs = MathTex(r'''\begin{matrix}
+            + & - \\
+            \times & \div
+        \end{matrix}''', font_size= 80)
+        self.play(Write(mafs))
+        ### but how do we do math with finite sequences of ones and zeroes?
+        how = Tex(r"$\leftarrow$ How?", font_size= 80, color="yellow").shift(RIGHT * 3)
+        self.play(Write(how))
+        ### Note that we can't do normal binary math, 
+        self.wait()
+        ### Remember, we c
