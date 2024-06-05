@@ -1,16 +1,17 @@
 from manim import *
+from manim_slides.slide import Slide
 
-class TheBasicSetup(Scene):
+class TheBasicSetup(Slide):
     def construct(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
         ### and can represent almost anything,
         pt_txt = Tex(r"\texttt{ATTACK AT DAWN}", font_size= 80)
         self.play(Write(pt_txt))
-        self.wait()
+        self.next_slide()
         ### but we generally represent it just as ones and zeroes.
         pt_bin = Tex(r"\texttt{10101100111101}", font_size= 80)
         self.play(Transform(pt_txt, pt_bin))
-        self.wait()
+        self.next_slide()
         ### We can then encrypt it
         encrypt_arrow = Arrow(start= UP * 2, end= DOWN * 2, buff= MED_LARGE_BUFF)
         ct_bin = Tex(r"\texttt{01010011000010}", font_size= 80).shift(DOWN * 2)
@@ -31,7 +32,7 @@ class TheBasicSetup(Scene):
         ### because binary numbers aren't finite
         finite = Tex(r"Must be \emph{finite}", font_size= 70, color= "yellow").shift(RIGHT * 4)
         self.play(Transform(weird, finite))
-        self.wait()
+        self.next_slide()
         self.play(
             Unwrite(encrypt_arrow),
             Unwrite(ct_bin),
@@ -39,7 +40,7 @@ class TheBasicSetup(Scene):
             Unwrite(weird),
         )
 
-class WhyGalois(Scene):
+class WhyNotIntegers(Slide):
     def construct(self):
         ### If we add two 3-digit binary numbers
         addition = MathTex(r"111 + 111", font_size= 80)
@@ -47,14 +48,14 @@ class WhyGalois(Scene):
         ### we get a 4-digit number.
         addition_full = MathTex(r"111 + 111 = 1110", font_size= 80)
         self.play(Transform(addition, addition_full))
-        self.wait()
+        self.next_slide()
         ### If we multiply them, we get a 6-digit number.
         mult = MathTex(r"111 \times 111 = 110001", font_size= 80).shift(DOWN)
         self.play(
             addition.animate.shift(UP),
             Write(mult),
         )
-        self.wait()
+        self.next_slide()
         ### This occurs because what we actually have
         self.play(
             Unwrite(addition),
@@ -78,7 +79,7 @@ class WhyGalois(Scene):
             Write(infinite),
             Write(arrow),
         )
-        self.wait()
+        self.next_slide()
         self.play(
             Unwrite(infinite),
             Unwrite(arrow),
@@ -118,24 +119,27 @@ class WhyGalois(Scene):
             Write(disclaimer),
         )
         ### They would also be super slow,
-        self.wait()
+        self.next_slide()
         ### and proving they're secure would be much more difficult.
         self.play(
             Unwrite(table),
             Unwrite(disclaimer),
         )
+
+class PrimeFields(Slide):
+    def construct(self):
         ### The first trick we need is modulo arithmetic,
         ma = MathTex(r"3 + 3 = 6", font_size= 80)
         self.play(Write(ma))
         ### where numbers simply wrap around.
         ma_actual = MathTex(r"3 + 3 = 0\quad(\operatorname{mod} 6)", font_size= 80)
         self.play(Transform(ma, ma_actual))
-        self.wait()
+        self.next_slide()
         ### You can pick a different "modulo" at which you jump
         ### back to zero.
         ma_alt = MathTex(r"3 + 3 = 2\quad(\operatorname{mod} 4)", font_size= 80)
         self.play(Transform(ma, ma_alt))
-        self.wait()
+        self.next_slide()
         ### However, it turns out that in order to have division,
         division = MathTex(r"\div", font_size= 100, color= "red").shift(3 * DOWN)
         self.play(Write(division))
@@ -145,4 +149,33 @@ class WhyGalois(Scene):
             Transform(ma, ma_prime),
             division.animate.set_color("green"),
         )
-        self.wait()
+        self.next_slide()
+        ### But we now have definitions for the four basic operations,
+        mafs = MathTex(r'''\begin{matrix}
+            + & - \\
+            \times & \div
+        \end{matrix}''', font_size= 80).shift(3 * DOWN)
+        self.play(Transform(division, mafs))
+        #### (which is just "do them modulo p")
+        pf_mafs = MathTex(r'''\begin{matrix}
+            + & - \\
+            \times & \div
+        \end{matrix}\quad(\operatorname{mod} p)''', font_size= 80).shift(3 * DOWN)
+        self.play(Transform(division, pf_mafs))
+        ### for a finite set.
+        pf_set = MathTex(r"\{0, 1, 2, \cdots, p - 1\}", font_size= 80)
+        self.play(Transform(ma, pf_set))
+        self.next_slide()
+        ### Any set of mathematical objects
+        fb = SurroundingRectangle(ma, buff= 0.1)
+        self.play(Create(fb))
+        ### which we can add, subtract, multiply, and divide,
+        fb_ops = SurroundingRectangle(division, buff= 0.1)
+        self.play(Transform(fb, fb_ops))
+        ### is called a field
+        field_text = Tex("\emph{A Field}", font_size= 80).to_corner(UR)
+        fb_field = SurroundingRectangle(VGroup(ma, division), buff= 0.1)
+        self.play(
+            Write(field_text),
+            Transform(fb, fb_field),
+        )
