@@ -49,6 +49,7 @@ class TheBasicSetup(Slide):
         self.play(
             Unwrite(encrypt_arrow),
             Unwrite(ct_bin),
+            Unwrite(pt_txt),
             Unwrite(mafs),
             Unwrite(weird),
         )
@@ -201,10 +202,21 @@ class PrimeFields(Slide):
         fb_ops = SurroundingRectangle(division, buff= 0.1)
         self.play(Transform(fb, fb_ops))
         self.next_slide()
-        ### is called a field
-        field_text = Tex("\emph{A Field}", font_size= 80).to_corner(UR)
+        ### is called a field.
+        field_text = Tex(r"A \emph{Field}", font_size= 80).to_corner(UR)
         fb_field = SurroundingRectangle(VGroup(ma, division), buff= 0.1)
         self.play(
             Write(field_text),
             Transform(fb, fb_field),
+        )
+        ### This particular field is known as a prime field.
+        self.next_slide()
+        prime_field_text = Tex(r"A \emph{Prime Field}", font_size= 80).to_corner(UR)
+        self.play(Transform(field_text, prime_field_text))
+        self.next_slide()
+        self.play(
+            Unwrite(field_text),
+            Uncreate(fb),
+            Unwrite(ma),
+            Unwrite(division),
         )
