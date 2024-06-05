@@ -241,3 +241,11 @@ class PrimeFields(Slide):
             Unwrite(ma),
             Unwrite(division),
         )
+
+class Hierarchy(Slide):
+    def construct(self):
+        pass # TODO
+
+class ExtensionFields(Slide):
+    def construct(self):
+        pass # TODO
