@@ -209,10 +209,31 @@ class PrimeFields(Slide):
             Write(field_text),
             Transform(fb, fb_field),
         )
-        ### This particular field is known as a prime field.
+        ### This type of field is known as a prime field.
         self.next_slide()
         prime_field_text = Tex(r"A \emph{Prime Field}", font_size= 80).to_corner(UR)
         self.play(Transform(field_text, prime_field_text))
+        ### Prime fields are one type of Galois field-
+        self.next_slide()
+        gf_text_text = Tex(r"A \emph{Galois Field}", font_size= 80).to_corner(UR)
+        self.play(Transform(field_text, gf_text_text))
+        ### the type with a prime number of elements.
+        self.next_slide()
+        gf_text = MathTex(r"\operatorname{GF}(p)", font_size= 80).to_corner(UR)
+        self.play(Transform(field_text, gf_text))
+        ### This isn't what we need to represent a sequence of bits, but it does
+        ### let us represent just one.
+        gf2_text = MathTex(r"\operatorname{GF}(2)", font_size= 80).to_corner(UR)
+        gf2_set = MathTex(r"\{0, 1\}", font_size= 80).shift(UP)
+        gf2_mafs = MathTex(r'''\begin{matrix}
+            + & - \\
+            \times & \div
+        \end{matrix}\quad(\operatorname{mod} 2)''', font_size= 80).shift(2 * DOWN)
+        self.play(
+            Transform(field_text, gf2_text),
+            Transform(ma, gf2_set),
+            Transform(division, gf2_mafs),
+        )
         self.next_slide()
         self.play(
             Unwrite(field_text),
