@@ -1,6 +1,16 @@
 from manim import *
 from manim_slides.slide import Slide
 
+class Top(Slide):
+    def construct(self):
+        [
+            cls.construct(self) for cls in [
+                TheBasicSetup,
+                WhyNotIntegers,
+                PrimeFields,
+            ]
+        ]
+
 class TheBasicSetup(Slide):
     def construct(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
