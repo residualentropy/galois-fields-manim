@@ -162,11 +162,14 @@ class PrimeFields(Slide):
         self.play(Transform(ma, ma_alt))
         self.next_slide()
         ### However, it turns out that in order to have division,
-        division = MathTex(r"\div", font_size= 100, color= "red").shift(3 * DOWN)
-        self.play(Write(division))
+        division = MathTex(r"\div", font_size= 100, color= "red").shift(2 * DOWN)
+        self.play(
+            Write(division),
+            Transform(ma, ma_alt.shift(UP)),
+        )
         self.next_slide()
         ### the modulo must be prime.
-        ma_prime = MathTex(r"3 + 3 = 1\quad(\operatorname{mod} 5)", font_size= 80)
+        ma_prime = MathTex(r"3 + 3 = 1\quad(\operatorname{mod} 5)", font_size= 80).shift(UP)
         self.play(
             Transform(ma, ma_prime),
             division.animate.set_color("green"),
@@ -176,18 +179,18 @@ class PrimeFields(Slide):
         mafs = MathTex(r'''\begin{matrix}
             + & - \\
             \times & \div
-        \end{matrix}''', font_size= 80).shift(3 * DOWN)
+        \end{matrix}''', font_size= 80).shift(2 * DOWN)
         self.play(Transform(division, mafs))
         self.next_slide()
         #### (which is just "do them modulo p")
         pf_mafs = MathTex(r'''\begin{matrix}
             + & - \\
             \times & \div
-        \end{matrix}\quad(\operatorname{mod} p)''', font_size= 80).shift(3 * DOWN)
+        \end{matrix}\quad(\operatorname{mod} p)''', font_size= 80).shift(2 * DOWN)
         self.play(Transform(division, pf_mafs))
         self.next_slide()
         ### for a finite set.
-        pf_set = MathTex(r"\{0, 1, 2, \cdots, p - 1\}", font_size= 80)
+        pf_set = MathTex(r"\{0, 1, 2, \cdots, p - 1\}", font_size= 80).shift(UP)
         self.play(Transform(ma, pf_set))
         self.next_slide()
         ### Any set of mathematical objects
