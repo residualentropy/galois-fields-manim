@@ -137,9 +137,12 @@ class WhyGalois(Scene):
         self.play(Transform(ma, ma_alt))
         self.wait()
         ### However, it turns out that in order to have division,
-        division = MathTex(r"\div", font_size= 100).shift(3 * DOWN)
+        division = MathTex(r"\div", font_size= 100, color= "red").shift(3 * DOWN)
         self.play(Write(division))
         ### the modulo must be prime.
         ma_prime = MathTex(r"3 + 3 = 1\quad(\operatorname{mod} 5)", font_size= 80)
-        self.play(Transform(ma, ma_prime))
+        self.play(
+            Transform(ma, ma_prime),
+            division.animate.set_color("green"),
+        )
         self.wait()
