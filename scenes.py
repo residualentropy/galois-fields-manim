@@ -20,15 +20,18 @@ class TheBasicSetup(Slide):
             Write(encrypt_arrow),
             Write(ct_bin),
         )
+        self.next_slide()
         ### by doing a bunch of math,
         mafs = MathTex(r'''\begin{matrix}
             + & - \\
             \times & \div
         \end{matrix}''', font_size= 80)
         self.play(Write(mafs))
+        self.next_slide()
         ### But we can't do normal binary math
         weird = Tex(r"$\leftarrow$ Weird", font_size= 70, color= "yellow").shift(RIGHT * 3)
         self.play(Write(weird))
+        self.next_slide()
         ### because binary numbers aren't finite
         finite = Tex(r"Must be \emph{finite}", font_size= 70, color= "yellow").shift(RIGHT * 4)
         self.play(Transform(weird, finite))
@@ -45,6 +48,7 @@ class WhyNotIntegers(Slide):
         ### If we add two 3-digit binary numbers
         addition = MathTex(r"111 + 111", font_size= 80)
         self.play(Write(addition))
+        self.next_slide()
         ### we get a 4-digit number.
         addition_full = MathTex(r"111 + 111 = 1110", font_size= 80)
         self.play(Transform(addition, addition_full))
@@ -61,17 +65,21 @@ class WhyNotIntegers(Slide):
             Unwrite(addition),
             Unwrite(mult),
         )
+        self.next_slide()
         ### are operations
         mafs = MathTex(r'''\begin{matrix}
             + & - \\
             \times & \div
         \end{matrix}''', font_size= 50).shift(2 * DOWN)
         self.play(Write(mafs))
+        self.next_slide()
         ### which act on binary numbers
         binary = MathTex(r"\{0, 1, 10, 11, \cdots\}", font_size=80)
         self.play(Write(binary))
+        self.next_slide()
         ### and the set of binary numbers
         self.play(mafs.animate.set_color('grey'))
+        self.next_slide()
         ### is infinite.
         infinite = MathTex(r"\infty", font_size=70, color= "yellow").shift(2 * UP)
         arrow = Arrow(start= infinite.get_bottom(), end= binary.get_top(), color="yellow")
@@ -86,6 +94,7 @@ class WhyNotIntegers(Slide):
             Unwrite(binary),
             Unwrite(mafs),
         )
+        self.next_slide()
         ### You might think that this isn't a problem since
         table = Table([[
             "42", "1", "44.1",
@@ -99,10 +108,12 @@ class WhyNotIntegers(Slide):
                 for obj in grp:
                     obj.set_opacity(0)
         self.play(Write(table))
+        self.next_slide()
         ### computers handle arbitrary-size numbers all the time.
         self.play(*(
             obj.animate.set_opacity(1) for grp in table.get_columns()[0] for obj in grp
         ))
+        self.next_slide()
         ### We can't use them for encryption though, since their implementations leak how
         ### how big they are.
         disclaimer = Tex(
@@ -118,8 +129,8 @@ class WhyNotIntegers(Slide):
             ),
             Write(disclaimer),
         )
-        ### They would also be super slow,
         self.next_slide()
+        ### They would also be super slow,
         ### and proving they're secure would be much more difficult.
         self.play(
             Unwrite(table),
@@ -143,6 +154,7 @@ class PrimeFields(Slide):
         ### However, it turns out that in order to have division,
         division = MathTex(r"\div", font_size= 100, color= "red").shift(3 * DOWN)
         self.play(Write(division))
+        self.next_slide()
         ### the modulo must be prime.
         ma_prime = MathTex(r"3 + 3 = 1\quad(\operatorname{mod} 5)", font_size= 80)
         self.play(
@@ -156,12 +168,14 @@ class PrimeFields(Slide):
             \times & \div
         \end{matrix}''', font_size= 80).shift(3 * DOWN)
         self.play(Transform(division, mafs))
+        self.next_slide()
         #### (which is just "do them modulo p")
         pf_mafs = MathTex(r'''\begin{matrix}
             + & - \\
             \times & \div
         \end{matrix}\quad(\operatorname{mod} p)''', font_size= 80).shift(3 * DOWN)
         self.play(Transform(division, pf_mafs))
+        self.next_slide()
         ### for a finite set.
         pf_set = MathTex(r"\{0, 1, 2, \cdots, p - 1\}", font_size= 80)
         self.play(Transform(ma, pf_set))
@@ -169,9 +183,11 @@ class PrimeFields(Slide):
         ### Any set of mathematical objects
         fb = SurroundingRectangle(ma, buff= 0.1)
         self.play(Create(fb))
+        self.next_slide()
         ### which we can add, subtract, multiply, and divide,
         fb_ops = SurroundingRectangle(division, buff= 0.1)
         self.play(Transform(fb, fb_ops))
+        self.next_slide()
         ### is called a field
         field_text = Tex("\emph{A Field}", font_size= 80).to_corner(UR)
         fb_field = SurroundingRectangle(VGroup(ma, division), buff= 0.1)

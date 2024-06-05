@@ -2,3 +2,5 @@
 media/
 __pycache__/
 slides/
+output_assets/
+output.html
