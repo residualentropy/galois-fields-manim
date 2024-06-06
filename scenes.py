@@ -3,18 +3,13 @@ from manim_slides.slide import Slide
 
 class Top(Slide):
     def construct(self):
-        [
-            cls.construct(self) for cls in [
-                TheBasicSetup,
-                WhyNotIntegers,
-                PrimeFields,
-                Hierarchy,
-                ExtensionFields,
-            ]
-        ]
+        self.the_basic_setup()
+        self.why_not_integers()
+        self.prime_fields()
+        self.hierarchy()
+        self.extension_fields()
 
-class TheBasicSetup(Slide):
-    def construct(self):
+    def the_basic_setup(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
         ### and can represent almost anything,
         pt_txt = Tex(r"\texttt{ATTACK AT DAWN}", font_size= 80)
@@ -56,8 +51,7 @@ class TheBasicSetup(Slide):
             Unwrite(weird),
         )
 
-class WhyNotIntegers(Slide):
-    def construct(self):
+    def why_not_integers(self):
         ### If we add two 3-digit binary numbers
         addition = MathTex(r"111 + 111", font_size= 80)
         self.play(Write(addition))
@@ -149,8 +143,7 @@ class WhyNotIntegers(Slide):
             Unwrite(disclaimer),
         )
 
-class PrimeFields(Slide):
-    def construct(self):
+    def prime_fields(self):
         ### The first trick we need is modulo arithmetic,
         ma = MathTex(r"3 + 3 = 6", font_size= 80)
         self.play(Write(ma))
@@ -244,12 +237,10 @@ class PrimeFields(Slide):
             Unwrite(division),
         )
 
-class Hierarchy(Slide):
-    def construct(self):
+    def hierarchy(self):
         fields = Tex(r"Fields", font_size= 80).shift(UP)
         self.play(Write(fields))
         self.next_slide()
 
-class ExtensionFields(Slide):
-    def construct(self):
+    def extension_fields(self):
         pass # TODO
