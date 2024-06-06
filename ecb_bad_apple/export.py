@@ -35,8 +35,8 @@ if __name__ == '__main__':
         frames_orig[frame_no] = frames_orig_dict[f'arr_{frame_no}']
     print(f"Loaded {N_FRAMES} frames.")
     methods = [
-        #('identity', lambda x: x),
-        #('ecb', encryption.encrypt_aes_ecb),
+        ('identity', lambda x: x),
+        ('ecb', encryption.encrypt_aes_ecb),
         ('gcm', encryption.encrypt_aes_gcm),
     ]
     print(f"Running all exports ({[ name for name, _ in methods ]})...")
