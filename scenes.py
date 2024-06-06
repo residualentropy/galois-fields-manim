@@ -244,7 +244,10 @@ class PrimeFields(Slide):
 
 class Hierarchy(Slide):
     def construct(self):
-        pass # TODO
+        fields = Tex(r"Fields", font_size= 80).shift(UP)
+        self.play(Write(fields))
+        self.next_slide()
+        
 
 class ExtensionFields(Slide):
     def construct(self):
