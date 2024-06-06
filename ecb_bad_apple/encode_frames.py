@@ -7,9 +7,9 @@ import numpy as np
 video_path = "BadApple.mp4"
 cap = cv2.VideoCapture(video_path)
 current_frame = 1
-total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+total_frames = 200 # int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 arrays = []
-while current_frame < total_frames:
+while current_frame <= total_frames:
     ret, frame = cap.read()
     #frame = frame[:,:,0]
     arrays.append(frame)
