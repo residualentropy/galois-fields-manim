@@ -8,6 +8,8 @@ class Top(Slide):
                 TheBasicSetup,
                 WhyNotIntegers,
                 PrimeFields,
+                Hierarchy,
+                ExtensionFields,
             ]
         ]
 
@@ -90,7 +92,6 @@ class WhyNotIntegers(Slide):
         self.next_slide()
         ### and the set of binary numbers
         self.play(mafs.animate.set_color('grey'))
-        self.next_slide()
         ### is infinite.
         infinite = MathTex(r"\infty", font_size=70, color= "yellow").shift(2 * UP)
         arrow = Arrow(start= infinite.get_bottom(), end= binary.get_top(), color="yellow")
@@ -223,6 +224,7 @@ class PrimeFields(Slide):
         self.play(Transform(field_text, gf_text))
         ### This isn't what we need to represent a sequence of bits, but it does
         ### let us represent just one.
+        self.next_slide()
         gf2_text = MathTex(r"\operatorname{GF}(2)", font_size= 80).to_corner(UR)
         gf2_set = MathTex(r"\{0, 1\}", font_size= 80).shift(UP)
         gf2_mafs = MathTex(r'''\begin{matrix}
@@ -247,7 +249,6 @@ class Hierarchy(Slide):
         fields = Tex(r"Fields", font_size= 80).shift(UP)
         self.play(Write(fields))
         self.next_slide()
-        
 
 class ExtensionFields(Slide):
     def construct(self):
