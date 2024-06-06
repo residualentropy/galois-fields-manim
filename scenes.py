@@ -72,7 +72,6 @@ class Top(Slide):
             Unwrite(addition),
             Unwrite(mult),
         )
-        self.next_slide()
         ### are operations
         mafs = MathTex(r'''\begin{matrix}
             + & - \\
@@ -100,7 +99,6 @@ class Top(Slide):
             Unwrite(binary),
             Unwrite(mafs),
         )
-        self.next_slide()
         ### You might think that this isn't a problem since
         table = Table([[
             "42", "1", "44.1",
