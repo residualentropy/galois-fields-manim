@@ -8,6 +8,7 @@ class Top(Slide):
         #self.prime_fields()
         #self.hierarchy()
         self.extension_fields()
+        #self.the_aes_field()
 
     def the_basic_setup(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
@@ -350,10 +351,10 @@ class Top(Slide):
             Write(the_problem),
         )
         mult = MathTex(r"a \times b", font_size= 80)
-        what_gf22 = MathTex(r"\operatorname{GF}(2^2)", font_size= 80).to_corner(UR)
+        what_gf23 = MathTex(r"\operatorname{GF}(2^3)", font_size= 80).to_corner(UR)
         self.play(
             Write(mult),
-            Transform(what, what_gf22),
+            Transform(what, what_gf23),
         )
         self.next_slide()
         mult_exp = MathTex(r"x", r" \times ", r"x^2", font_size= 80).set_color_by_tex(r"x", "orange")
@@ -361,3 +362,53 @@ class Top(Slide):
         self.next_slide()
         mult_uh_oh = MathTex(r"x^3", font_size= 80, color= "red")
         self.play(Transform(mult, mult_uh_oh))
+        self.next_slide()
+        mult_fixie_wixied = MathTex(r"x^3\quad(\operatorname{mod}", r"P", r")", font_size= 80, color= "green")
+        self.play(Transform(mult, mult_fixie_wixied))
+        self.next_slide()
+        the_division_strikes_back = MathTex(r"\div", font_size= 150, color= "red").shift((LEFT * 4) + (2 * DOWN))
+        self.play(Write(the_division_strikes_back))
+        self.next_slide()
+        pp = Tex(r"Prime Polynomial", font_size= 80).shift(mult_fixie_wixied[1].get_center()).shift(2 * DOWN)
+        pp_arrow = Arrow(start= pp.get_top(), end= mult_fixie_wixied[1].get_bottom())
+        self.play(
+            Write(pp),
+            Write(pp_arrow),
+            the_division_strikes_back.animate.set_color("green"),
+        )
+        self.next_slide()
+        self.play(Unwrite(the_division_strikes_back))
+        self.play(the_problem.animate.set_color("green"))
+        self.next_slide()
+        not_actually_pp = Tex(r"Irreducible Polynomial", font_size= 80).shift(mult_fixie_wixied[1].get_center()) \
+            .shift(2 * DOWN)
+        self.play(Transform(pp, not_actually_pp))
+        self.next_slide()
+        self.play(
+            Unwrite(mult),
+            Unwrite(pp),
+            Unwrite(pp_arrow),
+            Unwrite(the_problem),
+        )
+        self.play(Transform(what, what_ef_gfpm))
+        self.next_slide()
+        self.play(Write(objects_ef_gfpm))
+        self.next_slide()
+        ef_mafs = MathTex(r'''\begin{matrix}
+            + & - & & (\operatorname{mod} p) \\
+            \times & \div & & (\operatorname{mod} P)
+        \end{matrix}''', font_size= 80).shift(2 * DOWN)
+        self.play(Write(ef_mafs))
+        self.next_slide()
+        fb_ef = SurroundingRectangle(VGroup(objects_ef_gfpm, ef_mafs), buff= 0.1)
+        self.play(Create(fb_ef))
+        self.next_slide()
+        self.play(
+            Unwrite(objects_ef_gfpm),
+            Unwrite(ef_mafs),
+            Unwrite(what),
+            Uncreate(fb_ef),
+        )
+    
+    def the_aes_field(self):
+        pass # TODO
