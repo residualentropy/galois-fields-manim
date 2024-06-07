@@ -273,6 +273,40 @@ class Top(Slide):
         pf_symbol = MathTex(r"\operatorname{GF}(p)", font_size= 80).shift((3 * DOWN) + (2 * LEFT))
         self.play(Transform(pf, pf_symbol))
         self.next_slide()
+        pf_shifted = pf_symbol.shift(2 * LEFT)
+        galois_to_pf_shifted = Arrow(start= galois.get_bottom(), end= pf_shifted.get_top())
+        ef = Tex("Extension Fields", font_size= 80).shift((3 * DOWN) + RIGHT)
+        galois_to_ef = Arrow(start= galois.get_bottom(), end= ef.get_top())
+        self.play(
+            Transform(pf, pf_shifted),
+            Transform(galois_to_pf, galois_to_pf_shifted),
+        )
+        self.play(
+            Write(ef),
+            Write(galois_to_ef),
+        )
+        self.next_slide()
+        ef_color = Tex(r"Extension Fields", font_size= 80, color= 'green').shift((3 * DOWN) + RIGHT)
+        self.play(Transform(ef, ef_color))
+        self.next_slide()
+        ef_symbol = MathTex(r"\operatorname{GF}(p^m)", font_size= 80, color= 'green').shift(3 * DOWN)
+        galois_to_ef_symbol = Arrow(start= galois.get_bottom(), end= ef_symbol.get_top())
+        self.play(
+            Transform(ef, ef_symbol),
+            Transform(galois_to_ef, galois_to_ef_symbol),
+        )
+        self.next_slide()
+        self.play(
+            Unwrite(fields),
+            Unwrite(integers),
+            Unwrite(fields_to_integers),
+            Unwrite(galois),
+            Unwrite(fields_to_galois),
+            Unwrite(pf),
+            Unwrite(galois_to_pf),
+            Unwrite(ef),
+            Unwrite(galois_to_ef),
+        )
 
     def extension_fields(self):
         pass # TODO
