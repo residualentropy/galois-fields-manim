@@ -434,8 +434,12 @@ class Top(Slide):
         aes_field = Tex(r"\emph{The AES Field:}", font_size= 80).to_corner(UL)
         self.play(Write(aes_field))
         self.next_slide()
-        aes_field_params = MathTex(r"\operatorname{GF}(2^128)", font_size= 80)
+        aes_field_params = MathTex(r"\operatorname{GF}(2^{128})", font_size= 80)
         self.play(Write(aes_field_params))
+        self.next_slide()
+        irr_polynomial = Tex(r"(An Irreducible Polynomial)", font_size= 80) \
+            .shift(2 * DOWN)
+        self.play(Write(irr_polynomial))
         self.next_slide()
         aes_irr_polynomial = MathTex(
             "x^8", "+", "x^4", "+", "x^3", "+", "x", "+", "1",
@@ -444,10 +448,10 @@ class Top(Slide):
             .set_color_by_tex(r"x", "orange") \
             .set_color_by_tex(r"1", "orange") \
             .shift(2 * DOWN)
-        self.play(Write(aes_irr_polynomial))
+        self.play(Transform(irr_polynomial, aes_irr_polynomial))
         self.next_slide()
         self.play(
             Unwrite(aes_field),
             Unwrite(aes_field_params),
-            Unwrite(aes_irr_polynomial),
+            Unwrite(irr_polynomial),
         )
