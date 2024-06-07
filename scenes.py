@@ -392,21 +392,41 @@ class Top(Slide):
         )
         self.play(Transform(what, what_ef_gfpm))
         self.next_slide()
-        self.play(Write(objects_ef_gfpm))
+        where = MathTex(r'''\text{where}\,\begin{matrix}
+            a_i \in \operatorname{GF}(p)
+        \end{matrix}''', font_size= 60).to_corner(UL)
+        self.play(
+            Write(objects_ef_gfpm),
+            Write(where),
+        )
         self.next_slide()
         ef_mafs = MathTex(r'''\begin{matrix}
-            + & - & & (\operatorname{mod} p) \\
-            \times & \div & & (\operatorname{mod} P)
+            + & -
         \end{matrix}''', font_size= 80).shift(2 * DOWN)
         self.play(Write(ef_mafs))
         self.next_slide()
+        ef_mafs_actual = MathTex(r'''\begin{matrix}
+            + & -\\
+            \times & \div & & (\operatorname{mod} P)
+        \end{matrix}''', font_size= 80).shift(2 * DOWN)
+        self.play(Transform(ef_mafs, ef_mafs_actual))
+        self.next_slide()
+        where_both = MathTex(r'''\text{where}\ \begin{matrix}
+            a_i \in \operatorname{GF}(p) \\
+            P\ \text{irreducible}
+        \end{matrix}''', font_size= 60).to_corner(UL)
+        self.play(Transform(where, where_both))
+        self.next_slide()
         fb_ef = SurroundingRectangle(VGroup(objects_ef_gfpm, ef_mafs), buff= 0.1)
         self.play(Create(fb_ef))
+        a_galois_field = Tex(r"\underline{\emph{A Galois Field}}", font_size= 80).to_corner(UR)
+        self.play(Transform(what, a_galois_field))
         self.next_slide()
         self.play(
             Unwrite(objects_ef_gfpm),
             Unwrite(ef_mafs),
             Unwrite(what),
+            Unwrite(where),
             Uncreate(fb_ef),
         )
     
