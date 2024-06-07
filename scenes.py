@@ -7,8 +7,8 @@ class Top(Slide):
         #self.why_not_integers()
         #self.prime_fields()
         #self.hierarchy()
-        self.extension_fields()
-        #self.the_aes_field()
+        #self.extension_fields()
+        self.the_aes_field()
 
     def the_basic_setup(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
@@ -431,4 +431,23 @@ class Top(Slide):
         )
     
     def the_aes_field(self):
-        pass # TODO
+        aes_field = Tex(r"\emph{The AES Field:}", font_size= 80).to_corner(UL)
+        self.play(Write(aes_field))
+        self.next_slide()
+        aes_field_params = MathTex(r"\operatorname{GF}(2^128)", font_size= 80)
+        self.play(Write(aes_field_params))
+        self.next_slide()
+        aes_irr_polynomial = MathTex(
+            "x^8", "+", "x^4", "+", "x^3", "+", "x", "+", "1",
+            font_size= 80,
+        ) \
+            .set_color_by_tex(r"x", "orange") \
+            .set_color_by_tex(r"1", "orange") \
+            .shift(2 * DOWN)
+        self.play(Write(aes_irr_polynomial))
+        self.next_slide()
+        self.play(
+            Unwrite(aes_field),
+            Unwrite(aes_field_params),
+            Unwrite(aes_irr_polynomial),
+        )
