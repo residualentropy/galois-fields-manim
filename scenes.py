@@ -6,8 +6,8 @@ class Top(Slide):
         #self.the_basic_setup()
         #self.why_not_integers()
         #self.prime_fields()
-        self.hierarchy()
-        #self.extension_fields()
+        #self.hierarchy()
+        self.extension_fields()
 
     def the_basic_setup(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
@@ -309,4 +309,32 @@ class Top(Slide):
         )
 
     def extension_fields(self):
-        pass # TODO
+        what = MathTex(r"\operatorname{GF}(p)", font_size= 80).to_corner(UR)
+        objects = MathTex(r"\{0, 1, \cdots, p - 1\}", font_size= 80).shift(UP)
+        self.play(
+            Write(what),
+            Write(objects),
+        )
+        self.next_slide()
+        what_ef = MathTex(r"\operatorname{GF}(p^m)", font_size= 80).to_corner(UR)
+        objects_ef_base = MathTex(r"a_{m-1}", r"x^{m - 1}", r" + \cdots + ", r"a_1", r"x", r" + ", r"a_0", font_size= 80).shift(UP)
+        objects_ef = objects_ef_base.set_color_by_tex(r"x", "orange")
+        self.play(
+            Transform(what, what_ef),
+            Transform(objects, objects_ef),
+        )
+        self.next_slide()
+        gfp = MathTex(r"\operatorname{GF}(p)", font_size= 80).shift(2 * DOWN)
+        arrows = [
+            Arrow(start= coef.get_bottom(), end= end) \
+                for coef, end in [
+                    (objects_ef[0], gfp.get_corner(UL)),
+                    (objects_ef[3], gfp.get_top()),
+                    (objects_ef[6], gfp.get_corner(UR)),
+                ]
+        ]
+        self.play(
+            *map(Write, arrows),
+            Write(gfp),
+        )
+
