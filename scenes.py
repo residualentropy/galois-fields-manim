@@ -3,11 +3,11 @@ from manim_slides.slide import Slide
 
 class Top(Slide):
     def construct(self):
-        #self.the_basic_setup()
-        #self.why_not_integers()
-        #self.prime_fields()
-        #self.hierarchy()
-        #self.extension_fields()
+        self.the_basic_setup()
+        self.why_not_integers()
+        self.prime_fields()
+        self.hierarchy()
+        self.extension_fields()
         self.the_aes_field()
 
     def p(self, *args):
