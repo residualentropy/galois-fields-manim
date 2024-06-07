@@ -342,3 +342,22 @@ class Top(Slide):
             Transform(objects, objects_ef_gfpm),
             Transform(what, what_ef_gfpm),
         )
+        self.next_slide()
+        the_problem = Tex(r"The Problem", font_size= 80, color= "red").to_corner(UL)
+        self.play(
+            Unwrite(objects),
+            Unwrite(a0_in_gfp),
+            Write(the_problem),
+        )
+        mult = MathTex(r"a \times b", font_size= 80)
+        what_gf22 = MathTex(r"\operatorname{GF}(2^2)", font_size= 80).to_corner(UR)
+        self.play(
+            Write(mult),
+            Transform(what, what_gf22),
+        )
+        self.next_slide()
+        mult_exp = MathTex(r"x", r" \times ", r"x^2", font_size= 80).set_color_by_tex(r"x", "orange")
+        self.play(Transform(mult, mult_exp))
+        self.next_slide()
+        mult_uh_oh = MathTex(r"x^3", font_size= 80, color= "red")
+        self.play(Transform(mult, mult_uh_oh))
