@@ -11,7 +11,7 @@ class Top(Slide):
         self.the_aes_field()
 
     def p(self, *args):
-        sq = Square(0.1, color= "white").to_edge(LEFT)
+        sq = Square(0.1, color= "black").to_edge(LEFT)
         self.play(Create(sq, run_time= 0.2))
         self.play(*args)
         self.play(Uncreate(sq, run_time= 0.2))
@@ -383,8 +383,10 @@ class Top(Slide):
             the_division_strikes_back.animate.set_color("green"),
         )
         self.next_slide()
-        self.p(Unwrite(the_division_strikes_back))
-        self.p(the_problem.animate.set_color("green"))
+        self.p(
+            Unwrite(the_division_strikes_back),
+            the_problem.animate.set_color("green"),
+        )
         self.next_slide()
         not_actually_pp = Tex(r"Irreducible Polynomial", font_size= 80).shift(mult_fixie_wixied[1].get_center()) \
             .shift(2 * DOWN)
