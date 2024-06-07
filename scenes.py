@@ -263,14 +263,14 @@ class Top(Slide):
             Transform(fields_to_integers, fields_to_integers_shifted),
         )
         self.next_slide()
-        pf = Tex(r"Prime Fields", font_size= 80).shift((3 * DOWN) + (4 * LEFT))
+        pf = Tex(r"Prime Fields", font_size= 80).shift((3 * DOWN) + (2 * LEFT))
         galois_to_pf = Arrow(start= galois.get_bottom(), end= pf.get_top())
         self.play(
             Write(pf),
             Write(galois_to_pf),
         )
         self.next_slide()
-        pf_symbol = MathTex(r"\operatorname{GF}(p)", font_size= 80).shift((3 * DOWN) + (4 * LEFT))
+        pf_symbol = MathTex(r"\operatorname{GF}(p)", font_size= 80).shift((3 * DOWN) + (2 * LEFT))
         self.play(Transform(pf, pf_symbol))
         self.next_slide()
 
