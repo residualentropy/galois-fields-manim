@@ -10,21 +10,27 @@ class Top(Slide):
         #self.extension_fields()
         self.the_aes_field()
 
+    def p(self, *args):
+        sq = Square(0.1, color= "white").to_edge(LEFT)
+        self.play(Create(sq, run_time= 0.2))
+        self.play(*args)
+        self.play(Uncreate(sq, run_time= 0.2))
+
     def the_basic_setup(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
         ### and can represent almost anything,
         pt_txt = Tex(r"\texttt{ATTACK AT DAWN}", font_size= 80)
-        self.play(Write(pt_txt))
+        self.p(Write(pt_txt))
         self.next_slide()
         ### but we generally represent it just as ones and zeroes.
         pt_bin = Tex(r"\texttt{10101100111101}", font_size= 80)
-        self.play(Transform(pt_txt, pt_bin))
+        self.p(Transform(pt_txt, pt_bin))
         self.next_slide()
         ### We can then encrypt it
         encrypt_arrow = Arrow(start= UP * 2, end= DOWN * 2, buff= MED_LARGE_BUFF)
         ct_bin = Tex(r"\texttt{01010011000010}", font_size= 80).shift(DOWN * 2)
-        self.play(pt_txt.animate.shift(UP * 2))
-        self.play(
+        self.p(pt_txt.animate.shift(UP * 2))
+        self.p(
             Write(encrypt_arrow),
             Write(ct_bin),
         )
@@ -34,17 +40,17 @@ class Top(Slide):
             + & - \\
             \times & \div
         \end{matrix}''', font_size= 80)
-        self.play(Write(mafs))
+        self.p(Write(mafs))
         self.next_slide()
         ### But we can't do normal binary math
         weird = Tex(r"$\leftarrow$ Weird", font_size= 70, color= "yellow").shift(RIGHT * 3)
-        self.play(Write(weird))
+        self.p(Write(weird))
         self.next_slide()
         ### because binary numbers aren't finite
         finite = Tex(r"Must be \emph{finite}", font_size= 70, color= "yellow").shift(RIGHT * 4)
-        self.play(Transform(weird, finite))
+        self.p(Transform(weird, finite))
         self.next_slide()
-        self.play(
+        self.p(
             Unwrite(encrypt_arrow),
             Unwrite(ct_bin),
             Unwrite(pt_txt),
@@ -55,21 +61,21 @@ class Top(Slide):
     def why_not_integers(self):
         ### If we add two 3-digit binary numbers
         addition = MathTex(r"111 + 111", font_size= 80)
-        self.play(Write(addition))
+        self.p(Write(addition))
         self.next_slide()
         ### we get a 4-digit number.
         addition_full = MathTex(r"111 + 111 = 1110", font_size= 80)
-        self.play(Transform(addition, addition_full))
+        self.p(Transform(addition, addition_full))
         self.next_slide()
         ### If we multiply them, we get a 6-digit number.
         mult = MathTex(r"111 \times 111 = 110001", font_size= 80).shift(DOWN)
-        self.play(
+        self.p(
             addition.animate.shift(UP),
             Write(mult),
         )
         self.next_slide()
         ### This occurs because what we actually have
-        self.play(
+        self.p(
             Unwrite(addition),
             Unwrite(mult),
         )
@@ -78,23 +84,23 @@ class Top(Slide):
             + & - \\
             \times & \div
         \end{matrix}''', font_size= 50).shift(2 * DOWN)
-        self.play(Write(mafs))
+        self.p(Write(mafs))
         self.next_slide()
         ### which act on binary numbers
         binary = MathTex(r"\{0, 1, 10, 11, \cdots\}", font_size=80)
-        self.play(Write(binary))
+        self.p(Write(binary))
         self.next_slide()
         ### and the set of binary numbers
-        self.play(mafs.animate.set_color('grey'))
+        self.p(mafs.animate.set_color('grey'))
         ### is infinite.
         infinite = MathTex(r"\infty", font_size=70, color= "yellow").shift(2 * UP)
         arrow = Arrow(start= infinite.get_bottom(), end= binary.get_top(), color="yellow")
-        self.play(
+        self.p(
             Write(infinite),
             Write(arrow),
         )
         self.next_slide()
-        self.play(
+        self.p(
             Unwrite(infinite),
             Unwrite(arrow),
             Unwrite(binary),
@@ -112,10 +118,10 @@ class Top(Slide):
             for grp in col:
                 for obj in grp:
                     obj.set_opacity(0)
-        self.play(Write(table))
+        self.p(Write(table))
         self.next_slide()
         ### computers handle arbitrary-size numbers all the time.
-        self.play(*(
+        self.p(*(
             obj.animate.set_opacity(1) for grp in table.get_columns()[0] for obj in grp
         ))
         self.next_slide()
@@ -125,7 +131,7 @@ class Top(Slide):
             "*according to sketchy Python I spent 30 seconds on",
             font_size=20,
         ).shift((3 * DOWN) + (3 * RIGHT))
-        self.play(
+        self.p(
             *(
                 obj.animate.set_opacity(1) \
                     for col in table.get_columns()[1:] \
@@ -137,7 +143,7 @@ class Top(Slide):
         self.next_slide()
         ### They would also be super slow,
         ### and proving they're secure would be much more difficult.
-        self.play(
+        self.p(
             Unwrite(table),
             Unwrite(disclaimer),
         )
@@ -145,26 +151,26 @@ class Top(Slide):
     def prime_fields(self):
         ### The first trick we need is modulo arithmetic,
         ma = MathTex(r"3 + 3 = 6", font_size= 80)
-        self.play(Write(ma))
+        self.p(Write(ma))
         ### where numbers simply wrap around.
         ma_actual = MathTex(r"3 + 3 = 0\quad(\operatorname{mod} 6)", font_size= 80)
-        self.play(Transform(ma, ma_actual))
+        self.p(Transform(ma, ma_actual))
         self.next_slide()
         ### You can pick a different "modulo" at which you jump
         ### back to zero.
         ma_alt = MathTex(r"3 + 3 = 2\quad(\operatorname{mod} 4)", font_size= 80)
-        self.play(Transform(ma, ma_alt))
+        self.p(Transform(ma, ma_alt))
         self.next_slide()
         ### However, it turns out that in order to have division,
         division = MathTex(r"\div", font_size= 100, color= "red").shift(2 * DOWN)
-        self.play(
+        self.p(
             Write(division),
             Transform(ma, ma_alt.shift(UP)),
         )
         self.next_slide()
         ### the modulo must be prime.
         ma_prime = MathTex(r"3 + 3 = 1\quad(\operatorname{mod} 5)", font_size= 80).shift(UP)
-        self.play(
+        self.p(
             Transform(ma, ma_prime),
             division.animate.set_color("green"),
         )
@@ -174,46 +180,46 @@ class Top(Slide):
             + & - \\
             \times & \div
         \end{matrix}''', font_size= 80).shift(2 * DOWN)
-        self.play(Transform(division, mafs))
+        self.p(Transform(division, mafs))
         self.next_slide()
         #### (which is just "do them modulo p")
         pf_mafs = MathTex(r'''\begin{matrix}
             + & - \\
             \times & \div
         \end{matrix}\quad(\operatorname{mod} p)''', font_size= 80).shift(2 * DOWN)
-        self.play(Transform(division, pf_mafs))
+        self.p(Transform(division, pf_mafs))
         self.next_slide()
         ### for a finite set.
         pf_set = MathTex(r"\{0, 1, 2, \cdots, p - 1\}", font_size= 80).shift(UP)
-        self.play(Transform(ma, pf_set))
+        self.p(Transform(ma, pf_set))
         self.next_slide()
         ### Any set of mathematical objects
         fb = SurroundingRectangle(ma, buff= 0.1)
-        self.play(Create(fb))
+        self.p(Create(fb))
         self.next_slide()
         ### which we can add, subtract, multiply, and divide,
         fb_ops = SurroundingRectangle(division, buff= 0.1)
-        self.play(Transform(fb, fb_ops))
+        self.p(Transform(fb, fb_ops))
         self.next_slide()
         ### is called a field.
         field_text = Tex(r"A \emph{Field}", font_size= 80).to_corner(UR)
         fb_field = SurroundingRectangle(VGroup(ma, division), buff= 0.1)
-        self.play(
+        self.p(
             Write(field_text),
             Transform(fb, fb_field),
         )
         ### This type of field is known as a prime field.
         self.next_slide()
         prime_field_text = Tex(r"A \emph{Prime Field}", font_size= 80).to_corner(UR)
-        self.play(Transform(field_text, prime_field_text))
+        self.p(Transform(field_text, prime_field_text))
         ### Prime fields are one type of Galois field-
         self.next_slide()
         gf_text_text = Tex(r"A \emph{Galois Field}", font_size= 80).to_corner(UR)
-        self.play(Transform(field_text, gf_text_text))
+        self.p(Transform(field_text, gf_text_text))
         ### the type with a prime number of elements.
         self.next_slide()
         gf_text = MathTex(r"\operatorname{GF}(p)", font_size= 80).to_corner(UR)
-        self.play(Transform(field_text, gf_text))
+        self.p(Transform(field_text, gf_text))
         ### This isn't what we need to represent a sequence of bits, but it does
         ### let us represent just one.
         self.next_slide()
@@ -223,13 +229,13 @@ class Top(Slide):
             + & - \\
             \times & \div
         \end{matrix}\quad(\operatorname{mod} 2)''', font_size= 80).shift(2 * DOWN)
-        self.play(
+        self.p(
             Transform(field_text, gf2_text),
             Transform(ma, gf2_set),
             Transform(division, gf2_mafs),
         )
         self.next_slide()
-        self.play(
+        self.p(
             Unwrite(field_text),
             Uncreate(fb),
             Unwrite(ma),
@@ -238,17 +244,17 @@ class Top(Slide):
 
     def hierarchy(self):
         fields = Tex(r"Fields", font_size= 80).shift(UP * 3)
-        self.play(Write(fields))
+        self.p(Write(fields))
         self.next_slide()
         integers = Tex(r"Integers", font_size= 80)
         fields_to_integers = Arrow(start= fields.get_bottom(), end= integers.get_top())
-        self.play(
+        self.p(
             Write(integers),
             Write(fields_to_integers),
         )
         self.next_slide()
         integers_symbol = MathTex(r"\mathbb{Z}", font_size= 80)
-        self.play(Transform(integers, integers_symbol))
+        self.p(Transform(integers, integers_symbol))
         self.next_slide()
         galois = Tex(r"Galois Fields", font_size= 80).shift(LEFT * 2)
         integers_shifted = integers_symbol.shift(RIGHT * 2)
@@ -257,7 +263,7 @@ class Top(Slide):
             end= integers_shifted.get_top(),
         )
         fields_to_galois = Arrow(start= fields.get_bottom(), end= galois.get_top())
-        self.play(
+        self.p(
             Write(galois),
             Write(fields_to_galois),
             Transform(integers, integers_shifted),
@@ -266,38 +272,38 @@ class Top(Slide):
         self.next_slide()
         pf = Tex(r"Prime Fields", font_size= 80).shift((3 * DOWN) + (2 * LEFT))
         galois_to_pf = Arrow(start= galois.get_bottom(), end= pf.get_top())
-        self.play(
+        self.p(
             Write(pf),
             Write(galois_to_pf),
         )
         self.next_slide()
         pf_symbol = MathTex(r"\operatorname{GF}(p)", font_size= 80).shift((3 * DOWN) + (2 * LEFT))
-        self.play(Transform(pf, pf_symbol))
+        self.p(Transform(pf, pf_symbol))
         self.next_slide()
         pf_shifted = pf_symbol.shift(2 * LEFT)
         galois_to_pf_shifted = Arrow(start= galois.get_bottom(), end= pf_shifted.get_top())
         ef = Tex("Extension Fields", font_size= 80).shift((3 * DOWN) + RIGHT)
         galois_to_ef = Arrow(start= galois.get_bottom(), end= ef.get_top())
-        self.play(
+        self.p(
             Transform(pf, pf_shifted),
             Transform(galois_to_pf, galois_to_pf_shifted),
         )
-        self.play(
+        self.p(
             Write(ef),
             Write(galois_to_ef),
         )
         self.next_slide()
         ef_color = Tex(r"Extension Fields", font_size= 80, color= 'green').shift((3 * DOWN) + RIGHT)
-        self.play(Transform(ef, ef_color))
+        self.p(Transform(ef, ef_color))
         self.next_slide()
         ef_symbol = MathTex(r"\operatorname{GF}(p^m)", font_size= 80, color= 'green').shift(3 * DOWN)
         galois_to_ef_symbol = Arrow(start= galois.get_bottom(), end= ef_symbol.get_top())
-        self.play(
+        self.p(
             Transform(ef, ef_symbol),
             Transform(galois_to_ef, galois_to_ef_symbol),
         )
         self.next_slide()
-        self.play(
+        self.p(
             Unwrite(fields),
             Unwrite(integers),
             Unwrite(fields_to_integers),
@@ -312,7 +318,7 @@ class Top(Slide):
     def extension_fields(self):
         what = MathTex(r"\operatorname{GF}(p)", font_size= 80).to_corner(UR)
         objects = MathTex(r"\{0, 1, \cdots, p - 1\}", font_size= 80).shift(UP)
-        self.play(
+        self.p(
             Write(what),
             Write(objects),
         )
@@ -320,7 +326,7 @@ class Top(Slide):
         what_ef = MathTex(r"\operatorname{GF}(p^1)", font_size= 80).to_corner(UR)
         objects_ef_one = MathTex(r"a_0", font_size= 80).shift(UP)
         a0_in_gfp = MathTex(r"a_0 \in \operatorname{GF}(p)", font_size= 80).shift(DOWN)
-        self.play(
+        self.p(
             Transform(what, what_ef),
             Transform(objects, objects_ef_one),
             Write(a0_in_gfp),
@@ -330,7 +336,7 @@ class Top(Slide):
             .shift(UP).set_color_by_tex(r"x", "orange")
         what_ef_gfp3 = MathTex(r"\operatorname{GF}(p^3)", font_size= 80).to_corner(UR)
         ai_in_gfp = MathTex(r"a_i \in \operatorname{GF}(p)", font_size= 80).shift(DOWN)
-        self.play(
+        self.p(
             Transform(objects, objects_ef_gfp3),
             Transform(what, what_ef_gfp3),
             Transform(a0_in_gfp, ai_in_gfp),
@@ -339,63 +345,63 @@ class Top(Slide):
         objects_ef_gfpm = MathTex(r"a_{m-1}", r"x^{m - 1}", r" + \cdots + ", r"a_1", r"x", r" + ", r"a_0", font_size= 80) \
             .shift(UP).set_color_by_tex(r"x", "orange")
         what_ef_gfpm = MathTex(r"\operatorname{GF}(p^m)", font_size= 80).to_corner(UR)
-        self.play(
+        self.p(
             Transform(objects, objects_ef_gfpm),
             Transform(what, what_ef_gfpm),
         )
         self.next_slide()
         the_problem = Tex(r"The Problem", font_size= 80, color= "red").to_corner(UL)
-        self.play(
+        self.p(
             Unwrite(objects),
             Unwrite(a0_in_gfp),
             Write(the_problem),
         )
         mult = MathTex(r"a \times b", font_size= 80)
         what_gf23 = MathTex(r"\operatorname{GF}(2^3)", font_size= 80).to_corner(UR)
-        self.play(
+        self.p(
             Write(mult),
             Transform(what, what_gf23),
         )
         self.next_slide()
         mult_exp = MathTex(r"x", r" \times ", r"x^2", font_size= 80).set_color_by_tex(r"x", "orange")
-        self.play(Transform(mult, mult_exp))
+        self.p(Transform(mult, mult_exp))
         self.next_slide()
         mult_uh_oh = MathTex(r"x^3", font_size= 80, color= "red")
-        self.play(Transform(mult, mult_uh_oh))
+        self.p(Transform(mult, mult_uh_oh))
         self.next_slide()
         mult_fixie_wixied = MathTex(r"x^3\quad(\operatorname{mod}", r"P", r")", font_size= 80, color= "green")
-        self.play(Transform(mult, mult_fixie_wixied))
+        self.p(Transform(mult, mult_fixie_wixied))
         self.next_slide()
         the_division_strikes_back = MathTex(r"\div", font_size= 150, color= "red").shift((LEFT * 4) + (2 * DOWN))
-        self.play(Write(the_division_strikes_back))
+        self.p(Write(the_division_strikes_back))
         self.next_slide()
         pp = Tex(r"Prime Polynomial", font_size= 80).shift(mult_fixie_wixied[1].get_center()).shift(2 * DOWN)
         pp_arrow = Arrow(start= pp.get_top(), end= mult_fixie_wixied[1].get_bottom())
-        self.play(
+        self.p(
             Write(pp),
             Write(pp_arrow),
             the_division_strikes_back.animate.set_color("green"),
         )
         self.next_slide()
-        self.play(Unwrite(the_division_strikes_back))
-        self.play(the_problem.animate.set_color("green"))
+        self.p(Unwrite(the_division_strikes_back))
+        self.p(the_problem.animate.set_color("green"))
         self.next_slide()
         not_actually_pp = Tex(r"Irreducible Polynomial", font_size= 80).shift(mult_fixie_wixied[1].get_center()) \
             .shift(2 * DOWN)
-        self.play(Transform(pp, not_actually_pp))
+        self.p(Transform(pp, not_actually_pp))
         self.next_slide()
-        self.play(
+        self.p(
             Unwrite(mult),
             Unwrite(pp),
             Unwrite(pp_arrow),
             Unwrite(the_problem),
         )
-        self.play(Transform(what, what_ef_gfpm))
+        self.p(Transform(what, what_ef_gfpm))
         self.next_slide()
         where = MathTex(r'''\text{where}\,\begin{matrix}
             a_i \in \operatorname{GF}(p)
         \end{matrix}''', font_size= 60).to_corner(UL)
-        self.play(
+        self.p(
             Write(objects_ef_gfpm),
             Write(where),
         )
@@ -403,26 +409,26 @@ class Top(Slide):
         ef_mafs = MathTex(r'''\begin{matrix}
             + & -
         \end{matrix}''', font_size= 80).shift(2 * DOWN)
-        self.play(Write(ef_mafs))
+        self.p(Write(ef_mafs))
         self.next_slide()
         ef_mafs_actual = MathTex(r'''\begin{matrix}
             + & -\\
             \times & \div & & (\operatorname{mod} P)
         \end{matrix}''', font_size= 80).shift(2 * DOWN)
-        self.play(Transform(ef_mafs, ef_mafs_actual))
+        self.p(Transform(ef_mafs, ef_mafs_actual))
         self.next_slide()
         where_both = MathTex(r'''\text{where}\ \begin{matrix}
             a_i \in \operatorname{GF}(p) \\
             P\ \text{irreducible}
         \end{matrix}''', font_size= 60).to_corner(UL)
-        self.play(Transform(where, where_both))
+        self.p(Transform(where, where_both))
         self.next_slide()
         fb_ef = SurroundingRectangle(VGroup(objects_ef_gfpm, ef_mafs), buff= 0.1)
-        self.play(Create(fb_ef))
+        self.p(Create(fb_ef))
         a_galois_field = Tex(r"\underline{\emph{A Galois Field}}", font_size= 80).to_corner(UR)
-        self.play(Transform(what, a_galois_field))
+        self.p(Transform(what, a_galois_field))
         self.next_slide()
-        self.play(
+        self.p(
             Unwrite(objects_ef_gfpm),
             Unwrite(ef_mafs),
             Unwrite(what),
@@ -432,14 +438,14 @@ class Top(Slide):
     
     def the_aes_field(self):
         aes_field = Tex(r"\emph{The AES Field:}", font_size= 80).to_corner(UL)
-        self.play(Write(aes_field))
+        self.p(Write(aes_field))
         self.next_slide()
         aes_field_params = MathTex(r"\operatorname{GF}(2^{128})", font_size= 80)
-        self.play(Write(aes_field_params))
+        self.p(Write(aes_field_params))
         self.next_slide()
         irr_polynomial = Tex(r"(An Irreducible Polynomial)", font_size= 80) \
             .shift(2 * DOWN)
-        self.play(Write(irr_polynomial))
+        self.p(Write(irr_polynomial))
         self.next_slide()
         aes_irr_polynomial = MathTex(
             "x^8", "+", "x^4", "+", "x^3", "+", "x", "+", "1",
@@ -448,9 +454,9 @@ class Top(Slide):
             .set_color_by_tex(r"x", "orange") \
             .set_color_by_tex(r"1", "orange") \
             .shift(2 * DOWN)
-        self.play(Transform(irr_polynomial, aes_irr_polynomial))
+        self.p(Transform(irr_polynomial, aes_irr_polynomial))
         self.next_slide()
-        self.play(
+        self.p(
             Unwrite(aes_field),
             Unwrite(aes_field_params),
             Unwrite(irr_polynomial),
