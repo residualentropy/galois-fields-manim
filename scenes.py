@@ -316,25 +316,29 @@ class Top(Slide):
             Write(objects),
         )
         self.next_slide()
-        what_ef = MathTex(r"\operatorname{GF}(p^m)", font_size= 80).to_corner(UR)
-        objects_ef_base = MathTex(r"a_{m-1}", r"x^{m - 1}", r" + \cdots + ", r"a_1", r"x", r" + ", r"a_0", font_size= 80).shift(UP)
-        objects_ef = objects_ef_base.set_color_by_tex(r"x", "orange")
+        what_ef = MathTex(r"\operatorname{GF}(p^1)", font_size= 80).to_corner(UR)
+        objects_ef_one = MathTex(r"a_0", font_size= 80).shift(UP)
+        a0_in_gfp = MathTex(r"a_0 \in \operatorname{GF}(p)", font_size= 80).shift(DOWN)
         self.play(
             Transform(what, what_ef),
-            Transform(objects, objects_ef),
+            Transform(objects, objects_ef_one),
+            Write(a0_in_gfp),
         )
         self.next_slide()
-        gfp = MathTex(r"\operatorname{GF}(p)", font_size= 80).shift(2 * DOWN)
-        arrows = [
-            Arrow(start= coef.get_bottom(), end= end) \
-                for coef, end in [
-                    (objects_ef[0], gfp.get_corner(UL)),
-                    (objects_ef[3], gfp.get_top()),
-                    (objects_ef[6], gfp.get_corner(UR)),
-                ]
-        ]
+        objects_ef_gfp3 = MathTex(r"a_2", r"x^2", r" + ", r"a_1", r"x", r" + ", r"a_0", font_size= 80) \
+            .shift(UP).set_color_by_tex(r"x", "orange")
+        what_ef_gfp3 = MathTex(r"\operatorname{GF}(p^3)", font_size= 80).to_corner(UR)
+        ai_in_gfp = MathTex(r"a_i \in \operatorname{GF}(p)", font_size= 80).shift(DOWN)
         self.play(
-            *map(Write, arrows),
-            Write(gfp),
+            Transform(objects, objects_ef_gfp3),
+            Transform(what, what_ef_gfp3),
+            Transform(a0_in_gfp, ai_in_gfp),
         )
-
+        self.next_slide()
+        objects_ef_gfpm = MathTex(r"a_{m-1}", r"x^{m - 1}", r" + \cdots + ", r"a_1", r"x", r" + ", r"a_0", font_size= 80) \
+            .shift(UP).set_color_by_tex(r"x", "orange")
+        what_ef_gfpm = MathTex(r"\operatorname{GF}(p^m)", font_size= 80).to_corner(UR)
+        self.play(
+            Transform(objects, objects_ef_gfpm),
+            Transform(what, what_ef_gfpm),
+        )
