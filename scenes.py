@@ -3,11 +3,11 @@ from manim_slides.slide import Slide
 
 class Top(Slide):
     def construct(self):
-        self.the_basic_setup()
-        self.why_not_integers()
-        self.prime_fields()
+        #self.the_basic_setup()
+        #self.why_not_integers()
+        #self.prime_fields()
         self.hierarchy()
-        self.extension_fields()
+        #self.extension_fields()
 
     def the_basic_setup(self):
         ### The stuff we want to encrypt, usually called the "plaintext",
@@ -236,8 +236,42 @@ class Top(Slide):
         )
 
     def hierarchy(self):
-        fields = Tex(r"Fields", font_size= 80).shift(UP)
+        fields = Tex(r"Fields", font_size= 80).shift(UP * 3)
         self.play(Write(fields))
+        self.next_slide()
+        integers = Tex(r"Integers", font_size= 80)
+        fields_to_integers = Arrow(start= fields.get_bottom(), end= integers.get_top())
+        self.play(
+            Write(integers),
+            Write(fields_to_integers),
+        )
+        self.next_slide()
+        integers_symbol = MathTex(r"\mathbb{Z}", font_size= 80)
+        self.play(Transform(integers, integers_symbol))
+        self.next_slide()
+        galois = Tex(r"Galois Fields", font_size= 80).shift(LEFT * 2)
+        integers_shifted = integers_symbol.shift(RIGHT * 2)
+        fields_to_integers_shifted = Arrow(
+            start= fields.get_bottom(),
+            end= integers_shifted.get_top(),
+        )
+        fields_to_galois = Arrow(start= fields.get_bottom(), end= galois.get_top())
+        self.play(
+            Write(galois),
+            Write(fields_to_galois),
+            Transform(integers, integers_shifted),
+            Transform(fields_to_integers, fields_to_integers_shifted),
+        )
+        self.next_slide()
+        pf = Tex(r"Prime Fields", font_size= 80).shift((3 * DOWN) + (4 * LEFT))
+        galois_to_pf = Arrow(start= galois.get_bottom(), end= pf.get_top())
+        self.play(
+            Write(pf),
+            Write(galois_to_pf),
+        )
+        self.next_slide()
+        pf_symbol = MathTex(r"\operatorname{GF}(p)", font_size= 80).shift((3 * DOWN) + (4 * LEFT))
+        self.play(Transform(pf, pf_symbol))
         self.next_slide()
 
     def extension_fields(self):
